@@ -5,8 +5,6 @@
 ABSTRACT_TYPE(/obj/item/storage/secure)
 /obj/item/storage/secure
 	name = "storage/secure"
-	var/atom/movable/screen/storage/boxes = null
-	var/atom/movable/screen/close/closer = null
 	var/icon_locking = "secureb"
 	var/icon_sparking = "securespark"
 	var/icon_open = "secure0"
@@ -617,6 +615,11 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 	disposing()
 		. = ..()
 		STOP_TRACKING
+
+/obj/item/storage/secure/ssafe/larrys
+	configure_mode = FALSE
+	random_code = TRUE
+	spawn_contents = list(/obj/item/paper/IOU, /obj/item/device/key/generic/larrys, /obj/item/spacecash/buttcoin, /obj/item/spacecash/buttcoin)
 
 #undef KEYPAD_ERR
 #undef KEYPAD_SET
