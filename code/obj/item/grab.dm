@@ -361,6 +361,8 @@
 
 		if (irresistible)
 			prob_mod = 0
+		else if (isabomination(src.assailant))
+			prob_mod = 0.03
 		else if (is_incapacitated(src.affecting))
 			prob_mod = 0.7
 		else

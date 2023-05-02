@@ -34,9 +34,10 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1  // Only include the map Atlas, no other zlevels. Boots way faster
 
 //////--- CONVENIENCE OPTIONS FOR TESTING ETC ---//
-
 //#define DEBUG_EVERYONE_GETS_CAPTAIN_ID // all IDs are captain rank, kept separate from below options to avoid disrupting access-related tests
 //#define NO_COOLDOWNS // disables all /datum/targetable cooldowns
+//#define BONUS_POINTS // gives a bunch of starting points to various abilities/uplinks/weapon vendors
+//#define SHUT_UP_AND_GIVE_ME_MEDAL_STUFF // causes has_medal to always return true - good for testing medal rewards etc.
 
 //#define STOP_DISTRACTING_ME //All of the below
 
@@ -108,7 +109,7 @@ o+`        `-` ``..-:yooos-..----------..`
 
 //#define MAP_OVERRIDE_CONSTRUCTION		// Construction mode
 //#define MAP_OVERRIDE_DESTINY			// Destiny/RP
-#define MAP_OVERRIDE_CLARION			// Destiny/Alt RP
+//#define MAP_OVERRIDE_CLARION			// Destiny/Alt RP
 //#define MAP_OVERRIDE_COGMAP
 //#define MAP_OVERRIDE_COGMAP2			// Cogmap 2
 //#define MAP_OVERRIDE_DONUT2			// Updated Donut2

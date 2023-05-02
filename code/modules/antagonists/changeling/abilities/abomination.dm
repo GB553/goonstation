@@ -1,3 +1,4 @@
+
 /datum/targetable/changeling/abomination
 	name = "Horror Form"
 	desc = "Become something much more powerful."
@@ -13,8 +14,9 @@
 	cast(atom/target)
 		if (..())
 			return 1
-
+		var other_icon = 'icons/mob/abomination.dmi'
 		var/mob/living/carbon/human/H = holder.owner
+		var proc = /mob/proc/enter_horror_form
 		if (isabomination(H))
 			if (tgui_alert(H,"Are we sure?","Exit Horror Form?",list("Yes","No")) != "Yes")
 				return 1
@@ -23,31 +25,36 @@
 			boutput(H, "We cannot transform in this form.")
 			return 1
 		else
-			if (holder.points < 15)
-				boutput(holder.owner, "<span class='alert'>We're not strong enough to maintain the form.</span>")
+			if (holder.points < 40)
+				boutput(holder.owner, "<span class='alert'>We're not strong enough to maintain the form. (40 DNA required)</span>")
 				return 1
 			if (tgui_alert(H,"Are we sure?","Enter Horror Form?",list("Yes","No")) != "Yes")
 				return 1
-			H.set_mutantrace(/datum/mutantrace/abomination)
-			setalive(H)
-			H.real_name = "Shambling Abomination"
-			H.UpdateName()
-			H.update_face()
-			H.update_body()
-			H.update_clothing()
-			H.abilityHolder.transferOwnership(H)
+			boutput(holder.owner, "<span class='alert'>We need to hold still...</span>")
+			SETUP_GENERIC_ACTIONBAR(H, H, 8 SECONDS, proc, null,
+			other_icon, "abomination", null, null)
+/mob/proc/enter_horror_form()
+	var/mob/living/carbon/human/H = src
+	H.set_mutantrace(/datum/mutantrace/abomination)
+	setalive(H)
+	H.real_name = "Shambling Abomination"
+	H.UpdateName()
+	H.update_face()
+	H.update_body()
+	H.update_clothing()
+	H.abilityHolder.transferOwnership(H)
 
-			H.delStatus("paralysis")
-			H.delStatus("stunned")
-			H.delStatus("weakened")
-			H.delStatus("disorient")
-			H.delStatus("pinned")
-			H.force_laydown_standup()
+	H.delStatus("paralysis")
+	H.delStatus("stunned")
+	H.delStatus("weakened")
+	H.delStatus("disorient")
+	H.delStatus("pinned")
+	H.force_laydown_standup()
 
-			H.abilityHolder.updateButtons()
+	H.abilityHolder.updateButtons()
 
-			logTheThing(LOG_COMBAT, H, "enters horror form as a changeling, [log_loc(H)].")
-			return 0
+	logTheThing(LOG_COMBAT, H, "enters horror form as a changeling, [log_loc(H)].")
+	return 0
 
 /mob/proc/revert_from_horror_form()
 	if(ishuman(src))
@@ -55,14 +62,14 @@
 		qdel(H.mutantrace)
 		H.set_mutantrace(null)
 		var/datum/abilityHolder/changeling/C = H.get_ability_holder(/datum/abilityHolder/changeling)
-		if(!C || C.points < 15)
+		if(!C || C.points < 5)
 			boutput(H, "<span class='alert'>You weren't strong enough to change back safely and blacked out!</span>")
-			H.changeStatus("paralysis", 10 SECONDS)
+			H.changeStatus("paralysis", 15 SECONDS)
 		else
 			boutput(H, "<span class='alert'>You revert back to your original form. It leaves you weak.</span>")
-			H.changeStatus("weakened", 5 SECONDS)
+			H.changeStatus("weakened", 7 SECONDS)
 		if (C)
-			C.points = max(C.points - 15, 0)
+			C.points = max(C.points - 5, 0)
 			var/D = pick(C.absorbed_dna)
 			H.real_name = D
 			H.UpdateName()

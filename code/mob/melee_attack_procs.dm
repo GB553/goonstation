@@ -251,6 +251,10 @@
 		playsound(target.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
 		target.visible_message("<span class='alert'><B>[src] tries to grab [target], but can't get a good grip!</B></span>")
 		return
+	if (isabomination(target))
+		playsound(target.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
+		target.visible_message("<span class='alert'><B>[src] tries to grab [target], but can't get a good grip on its sliding flesh!</B></span>")
+		return
 
 	if (!target.canbegrabbed)
 		if (target.grabresistmessage)
@@ -313,6 +317,10 @@
 
 	//if (target.melee_attack_test(src, null, null, 1) != 1)
 	//	return
+	for(var/obj/item/grab/grab in target.equipped_list()) //if we're disarming the person grabbing us then resist instead
+		if (grab.affecting == src)
+			grab.do_resist()
+			return
 
 	var/datum/attackResults/disarm/msgs = calculate_disarm_attack(target, 0, 0, extra_damage, is_special)
 	msgs.damage_type = damtype

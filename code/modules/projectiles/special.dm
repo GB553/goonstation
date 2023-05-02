@@ -52,7 +52,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 /datum/projectile/special/acidspit
 	name = "acid splash"
 	icon_state = "acidspit"
-	damage = 0.8
+	damage = 4
 	dissipation_rate = 20
 	dissipation_delay = 10
 	sname = "acid"

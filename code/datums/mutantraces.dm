@@ -1227,7 +1227,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	human_compatible = 0
 	uses_human_clothes = 0
 	jerk = TRUE
-	brutevuln = 0.2
+	brutevuln = 0.35
 	override_attack = 0
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/right/abomination
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/left/abomination
@@ -1248,6 +1248,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "abomination", 100)
 			APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTSPRINT, src)
 			APPLY_ATOM_PROPERTY(M, PROP_MOB_CANT_BE_PINNED, src)
+			//add disarm resist
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_DISARM_RESIST, "abomination", 95)
 			if (length(M.grabbed_by))
 				for(var/obj/item/grab/grab_grabbed_by in M.grabbed_by)
 					if (!istype(grab_grabbed_by, /obj/item/grab/block))
@@ -1261,6 +1263,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STAMINA_REGEN_BONUS, "abomination")
 			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STUN_RESIST, "abomination")
 			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STUN_RESIST_MAX, "abomination")
+			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_DISARM_RESIST, "abomination")
 			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_CANTSPRINT, src)
 			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_CANT_BE_PINNED, src)
 		return ..()
@@ -1285,6 +1288,11 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 			if (C?.points)
 				if (last_drain + 30 <= world.time)
+					// 4x dna drain when crit
+					if (src.mob.health < 0)
+						mult = 4
+					else
+						mult = 1
 					C.points = max(0, C.points - (1 * mult))
 
 				switch (C.points)
