@@ -73,7 +73,7 @@ datum
 			transparency = 30
 			addiction_prob = 10//50
 			addiction_min = 15
-			overdose = 30
+			overdose = 15
 			var/counter = 1 //Data is conserved...so some jerkbag could inject a monkey with this, wait for data to build up, then extract some instant KO juice.  Dumb.
 			depletion_rate = 0.4
 			value = 5
@@ -104,19 +104,16 @@ datum
 				if(probmult(7)) M.emote("yawn")
 				..()
 				switch(counter += 1 * mult)
-					if(30 to 50)
+					if(16 to 36)
 						if(probmult(10)) M.setStatus("drowsy", 10 SECONDS)
-					if(50 to INFINITY)
+					if(36 to INFINITY)
 						if(probmult(20)) M.setStatus("drowsy", 40 SECONDS)
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
 				switch(counter)
-					if(30 to 50)
-						if (probmult(20))
-							M.setStatus("drowsy", 40 SECONDS)
-							M.losebreath += (2 * mult)
-					if(50 to INFINITY)
-						M.setStatusMin("paralysis", 5 SECONDS * mult)
-						M.losebreath += (5 * mult)
+					if(16 to 36)
+						M.setStatus("drowsy", 40 SECONDS)
+					if(36 to INFINITY)
+						M.setStatusMin("paralysis", 3 SECONDS * mult)
 						M.setStatus("drowsy", 40 SECONDS)
 				..()
 				return
@@ -905,8 +902,8 @@ datum
 			depletion_rate = 0.3
 			overdose = 10
 			threshold = THRESHOLD_INIT
-
-
+			
+			
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
