@@ -1,5 +1,5 @@
 /datum/action/bar/icon/abominationDevour
-	duration = 60
+	duration = 15
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "abom_devour"
 	icon = 'icons/mob/critter_ui.dmi'

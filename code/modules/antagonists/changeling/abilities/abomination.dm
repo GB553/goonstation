@@ -62,7 +62,7 @@
 		qdel(H.mutantrace)
 		H.set_mutantrace(null)
 		var/datum/abilityHolder/changeling/C = H.get_ability_holder(/datum/abilityHolder/changeling)
-		if(!C || C.points < 5)
+		if(!C || C.points < 15)
 			boutput(H, "<span class='alert'>You weren't strong enough to change back safely and blacked out!</span>")
 			H.changeStatus("paralysis", 15 SECONDS)
 		else
