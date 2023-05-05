@@ -1287,12 +1287,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 				src.mob.revert_from_horror_form()
 
 			if (C?.points)
-				if (last_drain + 30 <= world.time)
-					// 4x dna drain when crit
-					if (src.mob.health < 0)
-						mult = 4
-					else
-						mult = 1
+				if (last_drain + 90 <= world.time)
 					C.points = max(0, C.points - (1 * mult))
 
 				switch (C.points)
